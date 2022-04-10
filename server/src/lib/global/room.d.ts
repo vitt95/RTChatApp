@@ -1,16 +1,14 @@
-import { IUser } from './IUser';
-import { IMessage } from './IMessage';
 /**
- * Room interface
+ * Room type definitions .d.ts file
  */
-import User from "../models/user.mongo";
-
-export interface IRoom {
+interface IRoom {
   name: string;
   topic?: string;
+  owner: IUser[] | string[] | string
   users: IUser[] | string[];
   messages?: IMessage[] | string[];
   created_at: Date;
   updated_at?: Date;
   deleted_at?: Date;
 }
+

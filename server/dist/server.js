@@ -8,11 +8,15 @@ const https_1 = __importDefault(require("https"));
 const path_1 = __importDefault(require("path"));
 const tls_1 = __importDefault(require("tls"));
 const fs_1 = __importDefault(require("fs"));
-const seeder_1 = require("./database/seeder");
+const api_route_1 = __importDefault(require("./routes/api/api.route"));
+//import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 const connection_1 = require("./database/connection");
 tls_1.default.DEFAULT_MIN_VERSION = 'TLSv1.3';
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
+// For parsing application/x-www-form-urlencoded
+app.use(express_1.default.urlencoded({ extended: true }));
 https_1.default.createServer({
     cert: fs_1.default.readFileSync(path_1.default.join(__dirname, '..', 'cert.pem')),
     key: fs_1.default.readFileSync(path_1.default.join(__dirname, '..', 'key.pem')),
@@ -24,6 +28,7 @@ async function setUp() {
     await (0, connection_1.mongoConnect)();
     //await seedFakeUsers();
     //await seedFakeRooms();
-    await (0, seeder_1.seedFakeMessages)();
+    //await seedFakeMessages();
+    app.use(api_route_1.default);
 }
 setUp();

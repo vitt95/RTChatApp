@@ -1,6 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { IMessage, MESSAGE_STATUS } from '../interfaces/IMessage';
-
 
 const messageSchema = new Schema<IMessage>({
   user: {type: Schema.Types.ObjectId, ref: 'User', required: true},

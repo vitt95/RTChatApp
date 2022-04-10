@@ -1,4 +1,3 @@
-import { IUser } from "../interfaces/IUser";
 import bcrypt from 'bcrypt';
 
 export const dummyUsers: IUser[] = [

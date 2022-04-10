@@ -4,6 +4,7 @@ const mongoose_1 = require("mongoose");
 const roomSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     topic: { type: String },
+    owner: { type: String },
     users: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'User' }],
     messages: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Message' }],
     created_at: { type: Date, required: true },

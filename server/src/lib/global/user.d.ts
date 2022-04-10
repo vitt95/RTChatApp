@@ -1,8 +1,6 @@
-/**
- * User interface for mongoose schema.
- */
+// Type definitions for User 
 
-export interface IUser {
+interface IUser {
   id?: string;
   name: string;
   lastname: string;

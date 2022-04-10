@@ -5,6 +5,7 @@ import passport from 'passport';
 import path from 'path';
 import tls from 'tls';
 import fs from 'fs';
+import apiRouter from './routes/api/api.route';
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 import { mongoConnect } from './database/connection';
 
@@ -13,6 +14,11 @@ tls.DEFAULT_MIN_VERSION = 'TLSv1.3'
 const PORT = process.env.PORT || 8000;
 
 const app = express();
+
+app.use(express.json());
+  
+// For parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 https.createServer({
   cert: fs.readFileSync(path.join(__dirname, '..', 'cert.pem')),
@@ -27,6 +33,7 @@ async function setUp(): Promise<void>{
   //await seedFakeUsers();
   //await seedFakeRooms();
   //await seedFakeMessages();
+  app.use(apiRouter);
 }
 
 setUp();

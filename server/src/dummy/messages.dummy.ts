@@ -1,5 +1,3 @@
-import { IMessage, MESSAGE_STATUS } from '../interfaces/IMessage';
-
 export const dummyMessages: IMessage[] = [
   {
     user: '6252fc4852a8d89eb1ee0c91',
