@@ -11,7 +11,7 @@ const fs_1 = __importDefault(require("fs"));
 const api_route_1 = __importDefault(require("./routes/api/api.route"));
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 const connection_1 = require("./database/connection");
-tls_1.default.DEFAULT_MIN_VERSION = 'TLSv1.3';
+tls_1.default.DEFAULT_MIN_VERSION = process.env.TLS_VERSION;
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
