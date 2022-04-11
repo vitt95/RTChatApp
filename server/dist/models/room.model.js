@@ -10,10 +10,10 @@ const roomModel = {
 async function createRoom(room) {
     try {
         let resp = await room_mongo_1.default.collection.insertOne(room);
-        return { status: resp.insertedId, message: 'ok' };
+        return { status: 200, id: resp.insertedId, message: 'ok' };
     }
     catch (error) {
-        return { status: 400, message: error };
+        return { status: 400, id: -1, message: error };
     }
 }
 exports.default = roomModel;

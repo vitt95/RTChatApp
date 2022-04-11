@@ -1,7 +1,7 @@
 /**
- * Validation user input
+ * Room validation input
  */
-import { body, check, validationResult } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 
 enum RoomInput {
   roomName = 'roomName',
@@ -13,7 +13,7 @@ export const validateRoom = [
   body(RoomInput.roomName).escape(),
   body(RoomInput.name).escape(),
   body(RoomInput.topic).escape(),
-  
+
   (req: ExpressReq, res: ExpressRes, next: Function) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){

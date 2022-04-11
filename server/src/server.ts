@@ -1,12 +1,13 @@
 import express from 'express';
 import https from 'https';
-import helmet from 'helmet';
-import passport from 'passport';
+//import helmet from 'helmet';
+//import passport from 'passport';
 import path from 'path';
 import tls from 'tls';
 import fs from 'fs';
 import logger from 'morgan';
-import apiRouter from './routes/api/api.route';
+import roomRouter from './routes/api/room.route';
+import userRouter from './routes/api/user.route';
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 import { mongoConnect } from './database/connection';
 
@@ -34,7 +35,8 @@ async function setUp(): Promise<void>{
   //await seedFakeUsers();
   //await seedFakeRooms();
   //await seedFakeMessages();
-  app.use(apiRouter);
+  app.use(roomRouter);
+  app.use(userRouter); 
 }
 
 setUp();

@@ -5,11 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const https_1 = __importDefault(require("https"));
+//import helmet from 'helmet';
+//import passport from 'passport';
 const path_1 = __importDefault(require("path"));
 const tls_1 = __importDefault(require("tls"));
 const fs_1 = __importDefault(require("fs"));
 const morgan_1 = __importDefault(require("morgan"));
-const api_route_1 = __importDefault(require("./routes/api/api.route"));
+const room_route_1 = __importDefault(require("./routes/api/room.route"));
+const user_route_1 = __importDefault(require("./routes/api/user.route"));
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 const connection_1 = require("./database/connection");
 tls_1.default.DEFAULT_MIN_VERSION = process.env.TLS_VERSION;
@@ -31,6 +34,7 @@ async function setUp() {
     //await seedFakeUsers();
     //await seedFakeRooms();
     //await seedFakeMessages();
-    app.use(api_route_1.default);
+    app.use(room_route_1.default);
+    app.use(user_route_1.default);
 }
 setUp();

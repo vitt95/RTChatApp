@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateRoom = void 0;
 /**
- * Validation user input
+ * Room validation input
  */
 const express_validator_1 = require("express-validator");
 var RoomInput;
