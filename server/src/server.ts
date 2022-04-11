@@ -5,6 +5,7 @@ import passport from 'passport';
 import path from 'path';
 import tls from 'tls';
 import fs from 'fs';
+import logger from 'morgan';
 import apiRouter from './routes/api/api.route';
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 import { mongoConnect } from './database/connection';
@@ -14,9 +15,9 @@ tls.DEFAULT_MIN_VERSION = process.env.TLS_VERSION as tls.SecureVersion;
 const PORT = process.env.PORT || 8000;
 
 const app = express();
-
+app.use(logger('dev'));
 app.use(express.json());
-  
+
 // For parsing application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 

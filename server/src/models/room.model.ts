@@ -6,7 +6,11 @@ type OperationResponse = {
   message: string | number | unknown;
 }
 
-export async function createRoom(room: IRoom) : Promise<OperationResponse>{
+const roomModel = {
+  createRoom
+}
+
+async function createRoom(room: IRoom) : Promise<OperationResponse>{
 
   try {
     let resp = await Room.collection.insertOne(room);
@@ -15,3 +19,6 @@ export async function createRoom(room: IRoom) : Promise<OperationResponse>{
     return {status: 400, message: error}
   }
 }
+
+
+export default roomModel;

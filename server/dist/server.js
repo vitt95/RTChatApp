@@ -8,12 +8,14 @@ const https_1 = __importDefault(require("https"));
 const path_1 = __importDefault(require("path"));
 const tls_1 = __importDefault(require("tls"));
 const fs_1 = __importDefault(require("fs"));
+const morgan_1 = __importDefault(require("morgan"));
 const api_route_1 = __importDefault(require("./routes/api/api.route"));
 //import { seedFakeRooms, seedFakeUsers , seedFakeMessages} from './database/seeder';
 const connection_1 = require("./database/connection");
 tls_1.default.DEFAULT_MIN_VERSION = process.env.TLS_VERSION;
 const PORT = process.env.PORT || 8000;
 const app = (0, express_1.default)();
+app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.json());
 // For parsing application/x-www-form-urlencoded
 app.use(express_1.default.urlencoded({ extended: true }));
