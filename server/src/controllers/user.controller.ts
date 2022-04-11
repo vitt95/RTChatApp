@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { HTTP_STATUS } from '../enum/http.status';
 import userModel from '../models/user.model';
 /**
  * User controller file
@@ -6,7 +7,19 @@ import userModel from '../models/user.model';
 
 const userController = {
   createAsync,
-  updateAsync
+  updateAsync,
+  deleteAsync,
+  getOneAsync,
+}
+
+async function getOneAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes> {
+  const userId = req.params.userId;
+  const resp = await userModel.getUser(userId);
+  if(resp.id !== -1){
+    return res.status(HTTP_STATUS.OK).json(resp);
+  }
+
+  return res.status(HTTP_STATUS.BAD_REQUEST).json({message: "User not found"});
 }
 
 async function createAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes> {
@@ -21,13 +34,17 @@ async function createAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes
 
   let resp = await userModel.createUser(user);
   
-  return res.status(resp.status).json(resp);
+  if(resp.id !== -1){
+    return res.status(HTTP_STATUS.CREATED).json(resp);
+  }
+
+  return res.status(HTTP_STATUS.NOT_ACCEPTABLE).json(resp);
+
 }
 
 async function updateAsync(req: ExpressReq, res: ExpressRes) : Promise<ExpressRes> {
-  console.log(req.body);
   const user: IUserUpdate = {
-    id: req.body.id,
+    id: req.body.uid,
     name: req.body.name,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -36,8 +53,23 @@ async function updateAsync(req: ExpressReq, res: ExpressRes) : Promise<ExpressRe
   };
 
   const resp = await userModel.updateUser(user);
+  if(resp.id !== -1){
+    return res.status(HTTP_STATUS.ACCEPTED).json(resp);
+  }
 
-  return res.status(resp.status).json(resp);
+  return res.status(HTTP_STATUS.NOT_FOUND).json(resp);
 }
+
+async function deleteAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes>{
+  const userId = req.body.uid;
+  const resp = await userModel.deleteUser(userId);
+  if(resp.id !== -1){
+    return res.status(HTTP_STATUS.OK).json(resp);
+  }
+
+  return res.status(HTTP_STATUS.NOT_FOUND).json({message: "User not found"});
+  
+}
+
 
 export default userController;

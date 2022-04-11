@@ -4,14 +4,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const http_status_1 = require("../enum/http.status");
 const user_model_1 = __importDefault(require("../models/user.model"));
 /**
  * User controller file
  */
 const userController = {
     createAsync,
-    updateAsync
+    updateAsync,
+    deleteAsync,
+    getOneAsync,
 };
+async function getOneAsync(req, res) {
+    const userId = req.params.userId;
+    const resp = await user_model_1.default.getUser(userId);
+    if (resp.id !== -1) {
+        return res.status(http_status_1.HTTP_STATUS.OK).json(resp);
+    }
+    return res.status(http_status_1.HTTP_STATUS.BAD_REQUEST).json({ message: "User not found" });
+}
 async function createAsync(req, res) {
     const user = {
         name: req.body.name,
@@ -22,12 +33,14 @@ async function createAsync(req, res) {
         avatar: !req.body.avatar ? 'url-avatar' : req.body.avatar,
     };
     let resp = await user_model_1.default.createUser(user);
-    return res.status(resp.status).json(resp);
+    if (resp.id !== -1) {
+        return res.status(http_status_1.HTTP_STATUS.CREATED).json(resp);
+    }
+    return res.status(http_status_1.HTTP_STATUS.NOT_ACCEPTABLE).json(resp);
 }
 async function updateAsync(req, res) {
-    console.log(req.body);
     const user = {
-        id: req.body.id,
+        id: req.body.uid,
         name: req.body.name,
         lastname: req.body.lastname,
         email: req.body.email,
@@ -35,6 +48,17 @@ async function updateAsync(req, res) {
         avatar: req.body.avatar,
     };
     const resp = await user_model_1.default.updateUser(user);
-    return res.status(resp.status).json(resp);
+    if (resp.id !== -1) {
+        return res.status(http_status_1.HTTP_STATUS.ACCEPTED).json(resp);
+    }
+    return res.status(http_status_1.HTTP_STATUS.NOT_FOUND).json(resp);
+}
+async function deleteAsync(req, res) {
+    const userId = req.body.uid;
+    const resp = await user_model_1.default.deleteUser(userId);
+    if (resp.id !== -1) {
+        return res.status(http_status_1.HTTP_STATUS.OK).json(resp);
+    }
+    return res.status(http_status_1.HTTP_STATUS.NOT_FOUND).json({ message: "User not found" });
 }
 exports.default = userController;

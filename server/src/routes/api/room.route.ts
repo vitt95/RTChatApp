@@ -1,6 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
-import { validateRoom } from '../../utils/room.validation';
+import { validateRoom } from '../../validation/room.validation';
 
 import roomController from '../../controllers/room.controller';
 
