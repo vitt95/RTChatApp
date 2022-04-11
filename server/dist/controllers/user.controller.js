@@ -9,9 +9,10 @@ const user_model_1 = __importDefault(require("../models/user.model"));
  * User controller file
  */
 const userController = {
-    createUserAsync
+    createAsync,
+    updateAsync
 };
-async function createUserAsync(req, res) {
+async function createAsync(req, res) {
     const user = {
         name: req.body.name,
         lastname: req.body.lastname,
@@ -21,6 +22,19 @@ async function createUserAsync(req, res) {
         avatar: !req.body.avatar ? 'url-avatar' : req.body.avatar,
     };
     let resp = await user_model_1.default.createUser(user);
+    return res.status(resp.status).json(resp);
+}
+async function updateAsync(req, res) {
+    console.log(req.body);
+    const user = {
+        id: req.body.id,
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        dob: req.body.dob,
+        avatar: req.body.avatar,
+    };
+    const resp = await user_model_1.default.updateUser(user);
     return res.status(resp.status).json(resp);
 }
 exports.default = userController;

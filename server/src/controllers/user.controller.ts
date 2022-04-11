@@ -5,10 +5,11 @@ import userModel from '../models/user.model';
  */
 
 const userController = {
-  createUserAsync
+  createAsync,
+  updateAsync
 }
 
-async function createUserAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes> {
+async function createAsync(req: ExpressReq, res: ExpressRes): Promise<ExpressRes> {
   const user: IUser = {
     name: req.body.name,
     lastname: req.body.lastname,
@@ -21,7 +22,22 @@ async function createUserAsync(req: ExpressReq, res: ExpressRes): Promise<Expres
   let resp = await userModel.createUser(user);
   
   return res.status(resp.status).json(resp);
+}
 
+async function updateAsync(req: ExpressReq, res: ExpressRes) : Promise<ExpressRes> {
+  console.log(req.body);
+  const user: IUserUpdate = {
+    id: req.body.id,
+    name: req.body.name,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    dob: req.body.dob,
+    avatar: req.body.avatar,
+  };
+
+  const resp = await userModel.updateUser(user);
+
+  return res.status(resp.status).json(resp);
 }
 
 export default userController;
