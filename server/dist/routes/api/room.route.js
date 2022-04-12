@@ -8,5 +8,6 @@ require("dotenv/config");
 const room_validation_1 = require("../../validation/room.validation");
 const room_controller_1 = __importDefault(require("../../controllers/room.controller"));
 const roomRouter = express_1.default.Router();
-roomRouter.post(`/${process.env.API_PREFIX}/room/create-room`, room_validation_1.validateRoom, room_controller_1.default.createAsync);
+roomRouter.post(`/${process.env.API_PREFIX}/room/create`, room_validation_1.validateRoom, room_controller_1.default.createAsync);
+roomRouter.post(`/${process.env.API_PREFIX}/room/update`, room_validation_1.validateRoom, room_controller_1.default.updateAsync);
 exports.default = roomRouter;

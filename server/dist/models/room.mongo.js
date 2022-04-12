@@ -9,7 +9,7 @@ const roomSchema = new mongoose_1.Schema({
     messages: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Message' }],
     created_at: { type: Date, required: true },
     updated_at: { type: Date },
-    deleted_at: { type: Date }
+    deleted_at: { type: Date },
 });
 const Room = (0, mongoose_1.model)('Room', roomSchema);
 exports.default = Room;
